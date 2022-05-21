@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <title>Test Chessboard</title>
+    <link rel="stylesheet" href="css/chessboard-1.0.0.css">
+</head>
+
+<body>
+<main>
+
+<section>
+    <div id="board" style="width: 600px"></div>
+    <button id="startBtn">Start Position</button>
+    <button id="clearBtn">Clear Board</button>
+
+</section>
+
+</main>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/prettify.min.js"></script>
+<script src="js/chessboard-1.0.0.min.js"></script>
+<script>
+
+  function init () {
+  var board = Chessboard('board', {
+  draggable: true,
+  dropOffBoard: 'trash',
+  sparePieces: true})
+
+  $('#startBtn').on('click', board.start)
+  $('#clearBtn').on('click', board.clear)
+  }
+
+  $(document).ready(init)
+
+</script>
+</body>
+</html>
