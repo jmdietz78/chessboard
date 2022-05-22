@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <title>Test Chessboard!</title>
+    <link rel="stylesheet" href="css/chessboard-1.0.0.css">
+</head>
+
+<body>
+<main>
+<p id ="text">White to move and checkmate</p>
+<section>
+    <div id="board" style="width: 400px"></div>
+    <button id="resetBtn">Reset Position</button>
+    
+</section>
+
+</main>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/prettify.min.js"></script>
+<script src="js/chessboard-1.0.0.min.js"></script>
+<script>
+
+// snapback pieces 
+function onDrop (source, target, piece, newPos, oldPos, orientation) {
+  console.log('Source: ' + source)
+  console.log('Target: ' + target)
+  console.log('Piece: ' + piece)
+  console.log('New position: ' + Chessboard.objToFen(newPos))
+  console.log('Old position: ' + Chessboard.objToFen(oldPos))
+  console.log('Orientation: ' + orientation)
+  console.log(target)
+  console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+  let pieceTarget = (target)
+  var box = document.getElementById("incorrect")
+  if (piece.search('wR') == -1 || pieceTarget !== 'a4'){
+    //document.getElementById("incorrect").innerHTML = "Wrong.  Try again!";
+    alert("Wrong.  Try again!"); 
+    return 'snapback'}
+  else {
+    //document.getElementById("correct").innerHTML = "Correct!  Good job!";
+    alert("Correct!  Good job!");    
+  }
+}
+
+var config = {
+  draggable: true,
+  position: {
+    d4: 'wR',
+    a6: 'bK',
+    c6: 'wK'
+  },
+  onDrop: onDrop,
+
+}
+var board = Chessboard('board', config)
+
+
+$('#resetBtn').on('click', function () {
+  board.position({
+    d4: 'wR',
+    a6: 'bK',
+    c6: 'wK'
+  }),
+  document.getElementById("text").innerHTML = "White to move and checkmate";
+  document.getElementById("incorrect").innerHTML = "";
+  document.getElementById("correct").innerHTML = "";
+})
+ 
+
+
+
+</script>
+
+<p id ="incorrect"></p>
+<p id ="correct"></p>
+
+
+
+</body>
+</html>
