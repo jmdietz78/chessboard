@@ -31,7 +31,6 @@ function onDrop (source, target, piece, newPos, oldPos, orientation) {
   console.log('Orientation: ' + orientation)
   console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
   
-  var box = document.getElementById("incorrect")
   if (piece !== 'wR' || target !== 'a4'){
     //document.getElementById("incorrect").innerHTML = "Wrong.  Try again!";
     alert("Wrong.  Try again!"); 
