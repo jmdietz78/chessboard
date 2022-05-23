@@ -29,11 +29,10 @@ function onDrop (source, target, piece, newPos, oldPos, orientation) {
   console.log('New position: ' + Chessboard.objToFen(newPos))
   console.log('Old position: ' + Chessboard.objToFen(oldPos))
   console.log('Orientation: ' + orientation)
-  console.log(target)
   console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-  let pieceTarget = (target)
+  
   var box = document.getElementById("incorrect")
-  if (piece !== 'wR' || pieceTarget !== 'a4'){
+  if (piece !== 'wR' || target !== 'a4'){
     //document.getElementById("incorrect").innerHTML = "Wrong.  Try again!";
     alert("Wrong.  Try again!"); 
     return 'snapback'}
