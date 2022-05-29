@@ -22,6 +22,7 @@
 
 <script>
 
+//Configure the chessboard's intial position
 var config = {
   draggable: true,
   onDrop: onDrop,
@@ -49,12 +50,14 @@ var config = {
     g7: 'bP',
     g8: 'bK',
     h7: 'bP'
-
   }
 }
 var board = Chessboard('board', config)
+
+//Initial move by black
 board.move('d8-d5')
 
+//Reset the chessboard when Start Over clicked
 $('#resetBtn').on('click', function () {
   board = Chessboard('board', config),
   document.getElementById("note").innerHTML = "";
@@ -63,9 +66,11 @@ $('#resetBtn').on('click', function () {
 })
 
 
+//Record the move count.  Gets incremented after each successful move
 let moveCount = 1
-//console.log("moveCount = " + moveCount)
 
+
+//When a piece is dropped check to see if the move is correct
 function onDrop (source, target, piece) {
   //console.log('Source: ' + source)
   //console.log('Target: ' + target)
@@ -95,7 +100,7 @@ function onDrop (source, target, piece) {
 
     case 3:
     if (piece === 'wB' && target === 'f6'){
-    document.getElementById("note").innerHTML = "Move 3 correct!  Checkmate!";
+    document.getElementById("note").innerHTML = "Move 3 correct  Checkmate!";
     moveCount++
     console.log("moveCount3 = " + moveCount)} 
     else {document.getElementById("note").innerHTML = "Move 3 incorrect.  Try again!";
@@ -109,6 +114,7 @@ function onDrop (source, target, piece) {
   }
 }
 
+//After drop is completed and move is correct then move opponent piece to continue
 function onSnapEnd (source, target, piece) {
   //console.log('Source: ' + source)
   //console.log('Target: ' + target)
