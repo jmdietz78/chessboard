@@ -7,10 +7,10 @@
 
 <body>
 <main>
-<p id ="text">White to move and checkmate</p>
+<p id ="text">White to move and force checkmate</p>
 <section>
     <div id="board" style="width: 400px"></div>
-    <button id="resetBtn">Reset Position</button>
+    <button id="resetBtn">Start Over</button>
     
 </section>
 
@@ -18,60 +18,117 @@
 
 <script src="js/jquery-3.4.1.min.js"></script>
 <script src="js/prettify.min.js"></script>
-<script src="js/chessboard-1.0.0.min.js"></script>
-<script>
+<script src="js/chessboard-1.0.0.js"></script>
 
-// snapback pieces 
-function onDrop (source, target, piece, newPos, oldPos, orientation) {
-  console.log('Source: ' + source)
-  console.log('Target: ' + target)
-  console.log('Piece: ' + piece)
-  console.log('New position: ' + Chessboard.objToFen(newPos))
-  console.log('Old position: ' + Chessboard.objToFen(oldPos))
-  console.log('Orientation: ' + orientation)
-  console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-  
-  if (piece !== 'wR' || target !== 'a4'){
-    //document.getElementById("incorrect").innerHTML = "Wrong.  Try again!";
-    alert("Wrong.  Try again!"); 
-    return 'snapback'}
-  else {
-    //document.getElementById("correct").innerHTML = "Correct!  Good job!";
-    alert("Correct!  Good job!");    
-  }
-}
+<script>
 
 var config = {
   draggable: true,
-  position: {
-    d4: 'wR',
-    a6: 'bK',
-    c6: 'wK'
-  },
   onDrop: onDrop,
+  onSnapEnd: onSnapEnd,
+  position: {
+    a3: 'wR',
+    b2: 'wP',
+    c2: 'wP',
+    e5: 'wB',
+    f3: 'wQ',
+    f2: 'wP',
+    f1: 'wR',
+    g2: 'wP',
+    g1: 'wK',
+    h2: 'wP',
 
+    b5: 'bP',
+    b8: 'bR',
+    c7: 'bP',
+    d4: 'bP',
+    d5: 'bQ',
+    f6: 'bN',
+    f7: 'bP',
+    f8: 'bR',
+    g7: 'bP',
+    g8: 'bK',
+    h7: 'bP'
+
+  }
 }
 var board = Chessboard('board', config)
 
-
 $('#resetBtn').on('click', function () {
-  board.position({
-    d4: 'wR',
-    a6: 'bK',
-    c6: 'wK'
-  }),
-  document.getElementById("text").innerHTML = "White to move and checkmate";
-  document.getElementById("incorrect").innerHTML = "";
-  document.getElementById("correct").innerHTML = "";
+  board = Chessboard('board', config),
+  document.getElementById("note").innerHTML = "";
+  moveCount = 1;
 })
+
+
+let moveCount = 1
+
+function onDrop (source, target, piece) {
+  //console.log('Source: ' + source)
+  //console.log('Target: ' + target)
+  //console.log('Piece: ' + piece)
+  
  
+  console.log("moveCount = " + moveCount)
+
+  switch (moveCount) {
+
+    case 1:
+    if (piece === 'wQ' && target === 'f6' ){
+    document.getElementById("note").innerHTML = "Move 1 correct!  Keep going!";
+    moveCount++
+    console.log("moveCount1 = " + moveCount)
+    //board.move('g7-f6') 
+  } 
+    else {document.getElementById("note").innerHTML = "Move 1 incorrect.  Try again!";
+    return 'snapback'}
+    break
+
+    case 2:
+    if (piece === 'wR' && target === 'g3'){
+    document.getElementById("note").innerHTML = "Move 2 correct!  Keep going!";
+    moveCount++
+    console.log("moveCount2 = " + moveCount)} 
+    else {document.getElementById("note").innerHTML = "Move 2 incorrect.  Try again!";
+    return 'snapback'}
+    break
+
+    case 3:
+    if (piece === 'wB' && target === 'f6'){
+    document.getElementById("note").innerHTML = "Move 3 correct!  Checkmate!";
+    moveCount++
+    console.log("moveCount3 = " + moveCount)} 
+    else {document.getElementById("note").innerHTML = "Move 3 incorrect.  Try again!";
+    return 'snapback'}
+    break
+
+    default:
+    document.getElementById("note").innerHTML = "Puzzle already solved";
+    // snapback pieces 
+    return 'snapback'
+  }
+}
+
+function onSnapEnd (source, target, piece) {
+  //console.log('Source: ' + source)
+  //console.log('Target: ' + target)
+  //console.log('Piece: ' + piece)
+
+  switch (moveCount) {
+  case 2:board.move('g7-f6')
+  break
+  case 3:board.move('g8-h8')
+  break
+  } 
+
+}
+
 
 
 
 </script>
 
-<p id ="incorrect"></p>
-<p id ="correct"></p>
+<p id ="note"></p>
 
 
 
