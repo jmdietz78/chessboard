@@ -42,7 +42,7 @@ var config = {
     b8: 'bR',
     c7: 'bP',
     d4: 'bP',
-    d5: 'bQ',
+    d8: 'bQ',
     f6: 'bN',
     f7: 'bP',
     f8: 'bR',
@@ -53,11 +53,13 @@ var config = {
   }
 }
 var board = Chessboard('board', config)
+board.move('d8-d5')
 
 $('#resetBtn').on('click', function () {
   board = Chessboard('board', config),
   document.getElementById("note").innerHTML = "";
   moveCount = 1;
+  board.move('d8-d5');
 })
 
 
